@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+        rel="stylesheet"
+        href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+<center>
+    <div style="background-image: url('/static/images/banner_bg.jpg'); background-size: cover;
+            background-attachment: fixed;">
+    <div class="container">
+<div class="jumbotron p-3">
+    <center>
+        <marquee width="40%" direction="left" height="45px" scrollamount="12">
+    <div>
+        <img src="{{ url_for('static', filename= 'images/logo.png') }}"
+                                 alt="user photo" width="40" height="40" />
+        <span style="font-size: 26px; font-weight: bold; color: #03245c; font-family: 'Eras ITC', cursive; transform: skew(-10deg)">WPL 2024 Points Table</span>
+    </div> </marquee>
+    </center>
+    <table class="table table-hover" style="width: 1300px;" border="3">
+        <thead class="thead-dark">
+          <tr>
+              {% for cols in PT[0] %}
+              <th scope="col">{{ cols }}</th>
+              {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in range(5) %}
+        <tr>
+            {% if i < 3 %}  {% set color="#B5FE89" %} {% else %} {% set color="#FEC1CE" %} {% endif %}
+            <td bgcolor="{{ color }}"><center>{{ PT[1][i] }}</center></td>
+            <td bgcolor="{{ color }}"><center><img src="{{ PT[2][i] }}"
+                                                   alt="user photo" width="26" height="26" /></center></td>
+            <td bgcolor="{{ color }}" ><b>{{ PT[3][i] }}</b></td>
+            {% for j in range(4,10) %}
+            <td bgcolor="{{ color }}" ><center>{{ PT[j][i] }}</center></td>
+            {% endfor %}
+            <td bgcolor="{{ color }}"><center>{% for i in PT[10][i] %}
+                {% if i == 'W' %}
+                <img src="/static/images/W.png" alt="user photo" width="20" height="20" />
+                {% else %}
+            <img src="/static/images/L.png" alt="user photo" width="20" height="20" />
+            {% endif %} {% endfor %}</center></td>
+            <td bgcolor="{{ color }}"><center>{{ PT[11][i] }}</center></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div></div></div>
+</center>
+{% endblock %}

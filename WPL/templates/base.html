@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <title>TATA WPL 2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename= 'images/title-wpl-logo.ico') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arvo&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename= 'beauty.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+
+    {% endblock %}
+  </head>
+
+  <body>
+  <style>
+    .wordart-text {
+      font-family: 'Eras ITC', cursive; /* Use a playful cursive font */
+      font-size: 20px;
+      font-weight: bold; /* Make the text bold */
+      color: #3498db; /* Set the text color to dark blue */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+      letter-spacing: 2px; /* Adjust letter spacing for a stylized look */
+      line-height: 1.2; /* Adjust line height for spacing between lines */
+      text-align: center; /* Center the text */
+      transform: skew(-10deg); /* Skew the text for a curved effect */
+    }
+  </style>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" style="font-weight: bold; color: #02367b; letter-spacing: 1px; transform: skew(-10deg);" href="{{ url_for('main.index') }}"
+        ><img src="{{ url_for('static', filename= 'images/logo.png') }}"
+              alt="user photo" width="40" height="40" /> TATA WPL 2024</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a
+              href="{{ url_for('main.displayPT') }}"
+              class="btn btn-outline-secondary"
+              role="button"
+              >Points Table</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('main.displayFR') }}"
+              class="btn btn-outline-secondary"
+              role="button"
+              style="margin-left: 4px;"
+              >Fixture</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="{{ url_for('main.teams') }}"
+              class="btn btn-outline-secondary"
+              role="button"
+              style="margin-left: 4px;"
+              >Teams</a
+            >
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          {% if not current_user.is_authenticated %}
+          <a
+            href="{{ url_for('auth.login') }}"
+            class="btn btn-outline-primary"
+            role="button"
+            style="margin-left: 4px;"
+            >Login</a
+          >
+          {% endif %} {% if current_user.is_authenticated %}
+          <a
+            href="{{ url_for('main.update') }}"
+            class="btn btn-outline-primary"
+            role="button"
+            >Update / Delete</a
+          >
+          <a
+            href="{{ url_for('auth.logout') }}"
+            class="btn btn-outline-danger"
+            role="button"
+            style="margin-left: 4px;"
+            >Log Out</a
+          >
+          {% endif %}
+        </form>
+      </div>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>

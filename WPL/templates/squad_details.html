@@ -1,0 +1,105 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+        rel="stylesheet"
+        href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+        xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block content %}
+<style>
+.flex-container{
+display:flex;
+flex-flow:row wrap;
+justify-content: space-around;
+}
+
+.flex-item1{
+flex: 0 0 230px;
+margin: 5px;
+padding-bottom: 0px;
+}
+
+.flex-item2{
+flex: 0 0 600px;
+margin: 5px;
+padding-bottom: 0px;
+justify-content: ;
+}
+
+.w-100{
+width: 100px;
+text-decoration: none;
+}
+
+.grad1{
+background-image: linear-gradient(to bottom right, var(--c1), var(--c2), var(--c3));
+border-radius: 40px;
+border: 4px solid #ccc;
+color: white;
+}
+
+.mod_grad1{
+background-image: linear-gradient(to bottom, var(--c1), var(--c2));
+border-radius: 40px;
+border: 4px solid #ccc;
+color: white;
+}
+
+.grad2{
+font-size: 17px;
+color: white;
+background-image: radial-gradient(#3388ff,#0000ff);
+padding-top: 8px;
+padding-bottom: 8px;
+}
+</style>
+<div style="background-image: url('/static/images/banner_bg.jpg'); background-size: cover;
+            background-attachment: fixed;">
+<div class="flex-container">
+    <div class="flex-item1">
+        <div class="grad1" style="--c1: {{ clr['c1'] }}; --c2: {{ clr['c2'] }}; --c3: {{ clr['c3'] }}">
+        {% set name=sq.Name %}
+	<center><img src="/static/images/squads/{{ sq.Team }}/{{ name.replace(' ','-') }}.png" width="200" height="200"/>
+	<div class="grad2">
+	{{ sq.Name }}
+	</div>
+	<div class="container" style="padding-top: 10px; padding-bottom: 10px">
+	<div class="row" style="justify-content: center;">
+        {% if sq.Captain == 'Y' %}
+	<img src="/static/images/captain.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if sq.Keeper == 'Y' %}
+	<img src="/static/images/keeper.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if sq.Overseas == 'Y' %}
+	<img src="/static/images/overseas.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if sq.Role == 'Batter' or sq.Role == 'Wicket Keeper' %}
+	<img src="/static/images/Batter.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if sq.Role == 'Bowler' %}
+	<img src="/static/images/Bowler.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if sq.Role == 'All Rounder' %}
+	<img src="/static/images/All-rounder.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+	</div></div></center>
+	</div>
+    </div>
+</div>
+<div class="flex-container">
+    <div class="flex-item2">
+        <div class="mod_grad1" style="--c1: {{ clr['c1'] }}; --c2: {{ clr['c2'] }}; --c3: {{ clr['c3'] }}">
+            <center>
+                <br>
+                <h5><b>Role          :&nbsp;</b> {{ sq.Role }}</h5><br>
+                <h5><b>Batting-Style :&nbsp;</b> {{ sq.Batting }}</h5><br>
+                <h5><b>Bowling-Style :&nbsp;</b> {{ sq.Bowling }}</h5><br>
+                <h5><b>Nationality   :&nbsp;</b> {{ sq.Nationality }}</h5><br>
+                <h5><b>Date-of-Birth :&nbsp;</b> {{ (sq.DOB).strftime('%d-%B-%Y') }}</h5><br>
+            </center>
+	</div>
+    </div>
+</div>
+</div>
+{% endblock %}

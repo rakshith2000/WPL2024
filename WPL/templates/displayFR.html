@@ -1,0 +1,77 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+        rel="stylesheet"
+        href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+<div style="background-image: url('/static/images/bg.jpg'); background-size: cover;
+            background-attachment: fixed;">
+<center>
+<div>
+    {% set teams = ['DCW', 'GG', 'MIW', 'RCBW', 'UPW'] %}
+    {% if hint == 'All' %}
+    <a href="{{ url_for('main.displayFR', team='All') }}"
+       class="btn btn-info mb-4"
+       role="button"
+    >All</a>
+    {% else %}
+    <a href="{{ url_for('main.displayFR', team='All') }}"
+       class="btn btn-outline-info mb-4"
+       role="button"
+    >All</a>
+    {% endif %}
+
+    {% for i in teams %}
+    {% if hint == i %}
+    <a href="{{ url_for('main.displayFR', team=i) }}"
+       class="btn btn-info mb-4"
+       role="button"
+    >{{ i }}</a>
+    {% else %}
+    <a href="{{ url_for('main.displayFR', team=i) }}"
+       class="btn btn-outline-info mb-4"
+       role="button"
+    >{{ i }}</a>
+    {% endif %} {% endfor %}
+</div></center>
+<center>
+    <div>
+        <center>
+        <marquee width="40%" direction="left" height="45px" scrollamount="12">
+    <div>
+        <img src="{{ url_for('static', filename= 'images/logo.png') }}"
+                                 alt="user photo" width="40" height="40" />
+        <span style="font-size: 26px;  font-weight: bold; color: #03245c; font-family: 'Eras ITC', cursive; transform: skew(-10deg)">WPL 2024 Fixtures</span>
+    </div> </marquee>
+    </center>
+    <table class="table table-hover" style="width: 1200px;" border="2">
+        <thead class="thead-dark">
+            <tr>
+                {% for cols in FR[0] %}
+              <th scope="col">{{ cols }}</th>
+              {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(length) %}
+        <tr>
+            <td><center>{{ FR[1][i] }}</center></td>
+            <td><center>{% for z in FR[2][i].split('\n') %}
+            {{ z }}<br>{% endfor %}</center></td>
+             <td>{% for t in FR[3][i].split('\n') %}
+                 {% if t != 'vs' and t != 'TBA' %}
+                 <b><img src="/static/images/{{ t }}.png" width="26" height="26"/>&nbsp;{{ fn[t] }}</b><br>
+                 {% else %}
+                 <b>&nbsp;&nbsp;{{ t }}</b><br>
+                 {% endif %}{% endfor %}</td>
+            {% for j in range(4,7) %}
+            <td>{% for t in FR[j][i].split('\n') %} {{ t }}<br> {% endfor %}</td> {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</center></div>
+{% endblock %}

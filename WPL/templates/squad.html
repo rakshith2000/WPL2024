@@ -1,0 +1,154 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link
+        rel="stylesheet"
+        href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+<style>
+.zoomable-image {
+transition: transform 0.3s ease-in-out;
+}
+
+.zoomable-image:hover {
+transform: scale(1.3); /* Adjust the scale factor for the desired zoom level */
+}
+
+.flex-container{
+display:flex;
+flex-flow:row wrap;
+justify-content: space-around;
+}
+
+.flex-item{
+flex: 0 0 230px;
+margin: 5px;
+padding-bottom: 30px;
+}
+
+.w-100{
+width: 100px;
+text-decoration: none;
+}
+
+.grad1{
+background-image: linear-gradient(to bottom right, var(--c1), var(--c2), var(--c3));
+border-radius: 40px;
+border: 4px solid #ccc;
+}
+
+.mod_grad1{
+background-image: linear-gradient(to bottom, var(--c1), var(--c2));
+border-radius: 40px;
+border: 4px solid #ccc;
+}
+
+.grad2{
+font-size: 17px;
+color: white;
+background-image: radial-gradient(#3388ff,#0000ff);
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+.grad3{
+font-size: 30px;
+color: white;
+background-image: radial-gradient(#3388ff,#0000ff);
+padding-top: 8px;
+padding-bottom: 8px;
+}
+</style>
+<div style="background-image: url('/static/images/banner_bg.jpg'); background-size: cover;
+            background-attachment: fixed;">
+<center>
+        <marquee style="color: white;" width="40%" direction="left" height="45px" scrollamount="12">
+    <div>
+        <img src="static/images/squad_logos/{{ team }}.png"
+                                 alt="user photo" width="30" height="30" />
+        <span style="font-size: 29px">&nbsp;{{ fn }}&nbsp;</span>
+		<img src="static/images/squad_logos/{{ team }}.png"
+                                 alt="user photo" width="30" height="30" />
+    </div> </marquee>
+    </center>
+
+    {% macro display(i) %}
+    <div class="flex-item">
+		<a style="text-decoration: none" href="{{ url_for('main.squad_details', team=i.Team, name=i.Name) }}">
+	<div class="grad1" style="--c1: {{ clr['c1'] }}; --c2: {{ clr['c2'] }}; --c3: {{ clr['c3'] }}">
+        {% set name=i.Name %}
+	<center><img class="zoomable-image" src="/static/images/squads/{{ i.Team }}/{{ name.replace(' ','-') }}.png" width="200" height="200" alt="Zoomable Image"/>
+	<div class="grad2">
+	{{ i.Name }}
+	</div>
+	<div class="container" style="padding-top: 10px; padding-bottom: 10px">
+	<div class="row" style="justify-content: center;">
+        {% if i.Captain == 'Y' %}
+	<img src="/static/images/captain.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if i.Keeper == 'Y' %}
+	<img src="/static/images/keeper.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if i.Overseas == 'Y' %}
+	<img src="/static/images/overseas.png" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if i.Role == 'Batter' or i.Role == 'Wicket Keeper' %}
+	<img src="/static/images/Batter.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if i.Role == 'Bowler' %}
+	<img src="/static/images/Bowler.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+        {% if i.Role == 'All Rounder' %}
+	<img src="/static/images/All-rounder.svg" width="22" height="21"/>&nbsp;
+        {% endif %}
+	</div></div></center>
+	</div>
+		</a>
+    </div>
+    {% endmacro %}
+    <center>
+    <div class="grad3">
+	Captain
+	</div><br></center>
+<div class="flex-container">
+    {% for i in sq %}
+    {% if i.Captain == 'Y' %}
+    {{ display(i) }}
+    {% endif %}
+    {% endfor %}
+</div>
+    <center>
+    <div class="grad3">
+	Batters
+	</div><br></center>
+<div class="flex-container">
+    {% for i in sq %}
+    {% if (i.Role == 'Batter' or i.Role == 'Wicket Keeper') %}
+    {{ display(i) }}
+    {% endif %}
+    {% endfor %}
+</div>
+    <center>
+    <div class="grad3">
+	All Rounders
+	</div><br></center>
+<div class="flex-container">
+    {% for i in sq %}
+    {% if i.Role == 'All Rounder' %}
+    {{ display(i) }}
+    {% endif %}
+    {% endfor %}
+</div>
+    <center>
+    <div class="grad3">
+	Bowlers
+	</div><br></center>
+<div class="flex-container">
+    {% for i in sq %}
+    {% if i.Role == 'Bowler' %}
+    {{ display(i) }}
+    {% endif %}
+    {% endfor %}
+</div></div>
+{% endblock %}
